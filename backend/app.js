@@ -1,6 +1,6 @@
 import express from "express";
 import jwt from "jsonwebtoken";
-import { createUser, login } from "./auth.js";
+import { createUser, enforceAuth, login } from "./auth.js";
 import { generateImage } from "./image.js";
 const port = process.env.PORT || 3000;
 
@@ -44,7 +44,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.post("/generate-image", async (req, res) => {
+app.post("/generate-image", enforceAuth, async (req, res) => {
   const { prompt, options } = req.body;
 
   const { image, format } = await generateImage(prompt, options);

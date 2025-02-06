@@ -1,8 +1,12 @@
-POST http://localhost:3000/signup
+POST http://localhost:3000/generate-image
 Content-Type: application/json
 
 {
-    "email": "test@example.com"
-    ,
-    "password": "Noose1234kms."
+"prompt" : "A cat in a hat",
+"options": {
+    "format": "png"
 }
+}
+
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsImlhdCI6MTczODgzNjcxMSwiZXhwIjoxNzM4ODQwMzExfQ.Bo54oYeqpRaq2r1Jqq80_RgOdUifQLtRGbHmLsHxKQg
