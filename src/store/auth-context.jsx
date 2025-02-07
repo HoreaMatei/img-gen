@@ -30,7 +30,7 @@ const storedTokenExp = localStorage.getItem("tokenExp");
 
 let initialToken = null;
 
-if (storedToken && Date(storedTokenExp) > new Date()) {
+if (storedToken && new Date(storedTokenExp) > new Date()) {
   initialToken = storedToken;
 } else {
   localStorage.removeItem("token");
@@ -79,6 +79,8 @@ export function AuthContextProvider({ children }) {
     }
 
     setToken(resData.token);
+    // saveToken(resData.token);
+    localStorage.setItem("token", resData.token);
   }
 
   function logout() {

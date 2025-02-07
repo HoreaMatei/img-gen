@@ -54,8 +54,11 @@ const AuthForm = () => {
           disabled={isPending}
           className="bg-sky-400 text-black py-2 rounded-lg hover:bg-sky-500 disabled:cursor-not-allowed disabled:bg-stone-400 disabled:text-stone-600 "
         >
-          {!isPending && authMode === "login" ? "Login" : "Sign up"}
-          {isPending && "Submitting..."}
+          {!isPending && authMode === "login"
+            ? "Login"
+            : !isPending
+            ? "Sign up"
+            : "Submitting"}
         </button>
         <button
           button
