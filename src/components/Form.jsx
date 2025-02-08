@@ -5,7 +5,7 @@ const Form = ({ children, className, action }) => {
     <form
       action={action}
       className={twMerge(
-        "bg-stone-700 p-4 flex flex-col gap-3 rounded-lg",
+        " bg-[#ffffff21] backdrop-blur-md shadow-lg p-4 flex flex-col gap-3 rounded-lg",
         className
       )}
     >

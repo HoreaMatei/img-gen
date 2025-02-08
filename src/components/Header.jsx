@@ -1,19 +1,7 @@
-import React from "react";
-import { useAuthContext } from "../store/auth-context";
-
 const Header = () => {
-  const { token, logout } = useAuthContext();
   return (
-    <header className="text-center text-stone-50">
-      <h1 className="font-bold text-3xl font-mono">Image generator</h1>
-      {token && (
-        <button
-          onClick={logout}
-          className="mt-2 text-stone-200 hover:text-stone-400"
-        >
-          Logout
-        </button>
-      )}
+    <header className="relative text-center text-stone-50 mt-32">
+      <h1 className="z-10 font-bold text-5xl font-mono">AI Image Generator</h1>
     </header>
   );
 };

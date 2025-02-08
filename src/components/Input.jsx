@@ -5,7 +5,11 @@ const Input = ({ isTextArea, className, ...props }) => {
 
   return (
     <Component
-      className={twMerge("bg-stone-600 p-2 rounded-lg", className)}
+      style={{ backgroundColor: "rgba(255, 255, 255, 0.8)" }}
+      className={twMerge(
+        " bg-white p-2 shadow-lg focus:outline-none  ",
+        className
+      )}
       {...props}
     />
   );
