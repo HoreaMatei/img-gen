@@ -7,16 +7,28 @@ const port = process.env.PORT || 3000;
 
 const app = express();
 
-app.use(express.json());
+const allowedOrigins = [
+  "https://img-gen-njso.vercel.app",
+  "http://localhost:5173",
+];
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  }
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  // Handle preflight requests
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
   next();
 });
-
 // Explicitly handle preflight OPTIONS requests for all routes
+
+app.use(express.json());
 
 app.post("/signup", async (req, res) => {
   try {
