@@ -2,9 +2,19 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import { createUser, enforceAuth, login } from "./auth.js";
 import { generateImage } from "./image.js";
+import cors from "cors";
 const port = process.env.PORT || 3000;
 
 const app = express();
+
+const corsOptions = {
+  origin: "https://img-gen-njso.vercel.app",
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
 
 app.use((req, res, next) => {
