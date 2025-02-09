@@ -16,7 +16,7 @@ const corsOptions = {
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 
-app.use(cors(corsOptions));
+app.use(cors({ origin: "https://img-gen-njso.vercel.app" }));
 
 app.use(express.json());
 
