@@ -1,5 +1,7 @@
 import { createContext, useState, useContext, useEffect } from "react";
 
+const backendPORT = import.meta.env.VITE_PORT;
+
 const AuthContext = createContext({
   token: null,
   signup: (email, password) => {},
@@ -44,7 +46,7 @@ export function AuthContextProvider({ children }) {
   }, []);
 
   async function signup(email, password) {
-    const response = await fetch(`${process.env.VITE_PORT}/signup`, {
+    const response = await fetch(`${backendPORT}/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -62,7 +64,7 @@ export function AuthContextProvider({ children }) {
   }
 
   async function login(email, password) {
-    const response = await fetch(`${process.env.VITE_PORT}/login`, {
+    const response = await fetch(`${backendPORT}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
