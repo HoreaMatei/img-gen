@@ -2,29 +2,14 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import { createUser, enforceAuth, login } from "./auth.js";
 import { generateImage } from "./image.js";
-import cors from "cors";
+
 const port = process.env.PORT || 3000;
+
+const cors = require("cors");
 
 const app = express();
 
-const allowedOrigins = ["https://img-gen-njso.vercel.app"];
-
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-    res.setHeader("Access-Control-Allow-Origin", origin);
-  }
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  // Handle preflight requests
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
-  }
-  next();
-});
-// Explicitly handle preflight OPTIONS requests for all routes
-
+app.use(cors());
 app.use(express.json());
 
 app.post("/signup", async (req, res) => {
