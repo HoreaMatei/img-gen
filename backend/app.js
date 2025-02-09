@@ -8,7 +8,7 @@ const port = process.env.PORT || 3000;
 const app = express();
 
 const corsOptions = {
-  origin: "https://img-gen-njso.vercel.app",
+  origin: "https://img-gen-three.vercel.app",
   methods: ["GET", "POST", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
