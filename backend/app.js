@@ -8,6 +8,7 @@ const port = process.env.PORT || 3000;
 const app = express();
 
 const allowedOrigins = [
+  "https://img-gen-three.vercel.app",
   "https://img-gen-njso.vercel.app",
   "http://localhost:5173",
 ];
