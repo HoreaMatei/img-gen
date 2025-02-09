@@ -3,7 +3,8 @@ import jwt from "jsonwebtoken";
 import { createUser, enforceAuth, login } from "./auth.js";
 import { generateImage } from "./image.js";
 import cors from "cors";
-const port = process.env.PORT || 3000;
+
+const port = "https://img-gen-three.vercel.app" || 3000;
 
 const app = express();
 
