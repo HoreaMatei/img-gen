@@ -11,7 +11,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://domain-a.com",
+    origin: "https://img-gen-njso.vercel.app",
   })
 );
 app.use(express.json());
