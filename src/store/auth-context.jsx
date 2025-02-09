@@ -44,7 +44,7 @@ export function AuthContextProvider({ children }) {
   }, []);
 
   async function signup(email, password) {
-    const response = await fetch("http://localhost:3000/signup", {
+    const response = await fetch(`${process.env.VITE_PORT}/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -62,7 +62,7 @@ export function AuthContextProvider({ children }) {
   }
 
   async function login(email, password) {
-    const response = await fetch("http://localhost:3000/login", {
+    const response = await fetch(`${process.env.VITE_PORT}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
