@@ -12,20 +12,11 @@ const allowedOrigins = [
   "https://img-gen-three.vercel.app",
   "http://localhost:5173",
 ];
-
 app.use(
   cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, origin);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true, // Allow cookies/auth headers
+    origin: "https://img-gen-njso.vercel.app",
   })
 );
-app.options("*", cors()); //
 app.use(express.json());
 
 app.post("/signup", async (req, res) => {
