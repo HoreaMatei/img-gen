@@ -2,21 +2,33 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import { createUser, enforceAuth, login } from "./auth.js";
 import { generateImage } from "./image.js";
-
+import cors from "cors";
 const port = process.env.PORT || 3000;
-
-const cors = require("cors");
 
 const app = express();
 
+const allowedOrigins = [
+  "https://img-gen-njso.vercel.app",
+  "https://img-gen-three.vercel.app",
+  "http://localhost:5173",
+];
+
 app.use(
   cors({
-    origin: "https://img-gen-njso.vercel.app",
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, origin);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true, // Allow cookies/auth headers
   })
 );
+app.options("*", cors()); //
 app.use(express.json());
 
-app.post("/signup", async (req, res) => {
+app.post("/api/signup", async (req, res) => {
   try {
     const { email, password } = req.body;
     if (
@@ -37,7 +49,7 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-app.post("/login", async (req, res) => {
+app.post("/api/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -53,7 +65,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.post("/generate-image", enforceAuth, async (req, res) => {
+app.post("/api/generate-image", enforceAuth, async (req, res) => {
   const { prompt, options } = req.body;
 
   if (!prompt || prompt.trim().length === 0) {
