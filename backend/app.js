@@ -7,22 +7,16 @@ const port = process.env.PORT || 3000;
 
 const app = express();
 
-const corsOptions = {
-  origin: [
-    "https://img-gen-njso.vercel.app",
-    "https://img-gen-three.vercel.app",
-  ],
-  methods: ["GET", "POST", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true,
-};
-
-// Apply CORS middleware for all routes
-app.use(cors(corsOptions));
 app.use(express.json());
 
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
+
 // Explicitly handle preflight OPTIONS requests for all routes
-app.options("*", cors(corsOptions));
 
 app.post("/signup", async (req, res) => {
   try {
