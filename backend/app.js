@@ -4,18 +4,13 @@ import { createUser, enforceAuth, login } from "./auth.js";
 import { generateImage } from "./image.js";
 import cors from "cors";
 
-const port = "https://img-gen-three.vercel.app" || 3000;
+const port = process.env.PORT || 3000;
 
 const app = express();
 
-const allowedOrigins = [
-  "https://img-gen-njso.vercel.app",
-  "https://img-gen-three.vercel.app",
-  "http://localhost:5173",
-];
 app.use(
   cors({
-    origin: "https://img-gen-njso.vercel.app",
+    origin: "*",
   })
 );
 app.use(express.json());
