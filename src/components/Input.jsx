@@ -1,7 +1,12 @@
 import { twMerge } from "tailwind-merge";
 
 const Input = ({ isTextArea, className, ...props }) => {
-  const Component = isTextArea ? "textarea" : "input";
+  let Component;
+  if (isTextArea) {
+    Component = "textarea";
+  } else {
+    Component = "input";
+  }
 
   return (
     <Component

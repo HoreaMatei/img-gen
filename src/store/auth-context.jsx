@@ -1,4 +1,4 @@
-import { createContext, useState, use, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 
 const AuthContext = createContext({
   token: null,
@@ -9,11 +9,9 @@ const AuthContext = createContext({
 
 export function useAuthContext() {
   const authCtx = useContext(AuthContext);
-
   if (!authCtx) {
     throw new Error("useAuthContext must be used within an AuthProvider");
   }
-
   return authCtx;
 }
 
@@ -21,24 +19,29 @@ function saveToken(token) {
   localStorage.setItem("token", token);
   localStorage.setItem(
     "tokenExp",
-    new Data(Date.now() + 60 * 60 * 1000).toISOString()
+    new Date(Date.now() + 60 * 60 * 1000).toISOString()
   );
 }
 
-const storedToken = localStorage.getItem("token");
-const storedTokenExp = localStorage.getItem("tokenExp");
-
-let initialToken = null;
-
-if (storedToken && new Date(storedTokenExp) > new Date()) {
-  initialToken = storedToken;
-} else {
-  localStorage.removeItem("token");
-  localStorage.removeItem("tokenExp");
-}
-
 export function AuthContextProvider({ children }) {
-  const [token, setToken] = useState(initialToken);
+  const [token, setToken] = useState(null);
+
+  // Load token from localStorage on mount
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    const storedTokenExp = localStorage.getItem("tokenExp");
+
+    if (
+      storedToken &&
+      storedTokenExp &&
+      new Date(storedTokenExp) > new Date()
+    ) {
+      setToken(storedToken); // Restore token
+    } else {
+      localStorage.removeItem("token");
+      localStorage.removeItem("tokenExp");
+    }
+  }, []);
 
   async function signup(email, password) {
     const response = await fetch("http://localhost:3000/signup", {
@@ -51,10 +54,7 @@ export function AuthContextProvider({ children }) {
 
     const resData = await response.json();
     if (!response.ok) {
-      throw new Error(
-        resData.message ||
-          "Creating a user failed. Check your credentials or try later."
-      );
+      throw new Error(resData.message || "Creating a user failed.");
     }
 
     setToken(resData.token);
@@ -72,15 +72,11 @@ export function AuthContextProvider({ children }) {
 
     const resData = await response.json();
     if (!response.ok) {
-      throw new Error(
-        resData.message ||
-          "Logging in failed. Check your credentials or try later."
-      );
+      throw new Error(resData.message || "Logging in failed.");
     }
 
     setToken(resData.token);
-    // saveToken(resData.token);
-    localStorage.setItem("token", resData.token);
+    saveToken(resData.token);
   }
 
   function logout() {

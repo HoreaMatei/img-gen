@@ -16,7 +16,9 @@ async function sendImageRequest(prompt, options, authToken) {
   });
 
   if (!response.ok) {
-    throw new Error("failed to generate image");
+    throw new Error(
+      "Failed to generate image, please check the prompt input field"
+    );
   }
 
   const imageBlob = await response.blob();
@@ -24,6 +26,7 @@ async function sendImageRequest(prompt, options, authToken) {
 }
 
 const ImageGeneration = () => {
+  const isTextarea = true;
   const { token, logout } = useAuthContext();
 
   async function submitAction(_, formData) {
@@ -45,16 +48,22 @@ const ImageGeneration = () => {
     result: null,
   });
   return (
-    <div className=" text-center mt-28">
-      <div className="flex  flex-col sm:flex-row items-center gap-10 max-w-[70rem] mx-auto ">
+    <div className=" text-center mt-9 lg:mt-28">
+      <div className="flex  flex-col-reverse sm:flex-row items-center gap-0 lg:gap-10 max-w-[70rem] mx-auto ">
         <Form
           action={action}
-          className="flex flex-col w-[25rem] justify-between gap-8"
+          className="flex flex-col w-[22rem] lg:w-[25rem] justify-between gap-8 items-center"
         >
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 ">
             <InputContainer>
               <Label htmlFor="prompt">Image Prompt</Label>
-              <Input type="text" id="prompt" name="prompt" isTextarea />
+              <Input
+                type="text"
+                id="prompt"
+                className="h-12 w-72"
+                name="prompt"
+                isTextArea={isTextarea}
+              />
             </InputContainer>
             <div className="flex gap-5 ">
               <InputContainer>
@@ -67,7 +76,7 @@ const ImageGeneration = () => {
                   max="100"
                   step="1.0"
                   defaultValue="80"
-                  className="w-[4rem] focus:outline-none "
+                  className="w-[4rem] focus:outline-none  h-8 lg:h-10  "
                 />
               </InputContainer>
               <InputContainer>
@@ -77,7 +86,7 @@ const ImageGeneration = () => {
                   name="aspectRatio"
                   defaultValue="1:1"
                   style={{ backgroundColor: "rgba(255, 255, 255, 0.8)" }}
-                  className="p-[0.6rem] focus:outline-none rounded-sm w-[6rem]"
+                  className="  p-[0.2rem] lg:p-[0.6rem] focus:outline-none rounded-sm w-[5rem]  h-8 lg:h-10 "
                 >
                   <option value="1:1">1:1</option>
                   <option value="16:9">16:9</option>
@@ -91,7 +100,7 @@ const ImageGeneration = () => {
                   id="format"
                   name="format"
                   defaultValue="png"
-                  className="p-[0.6rem] rounded-sm w-[5rem]"
+                  className=" p-[0.2rem] lg:p-[0.6rem] rounded-sm w-[5rem] h-8 lg:h-10 "
                 >
                   <option value="webp">WebP</option>
                   <option value="png">PNG</option>
@@ -103,15 +112,15 @@ const ImageGeneration = () => {
           <p className="flex justify-center">
             <button
               disabled={isPending}
-              className="bg-[#d3d3d3ec] text-black py-3 rounded-lg  hover:bg-[#b1aeaeec] disabled:cursor-not-allowed disabled:bg-stone-400 disabled:text-stone-600 px-10 text-lg"
+              className=" transform active:scale-95 bg-[#d3d3d3ec] text-black shadow-stone-600  shadow-md py-1 lg:py-3 rounded-sm  hover:bg-[#c9c5c5ec] disabled:cursor-not-allowed disabled:bg-stone-400 disabled:text-stone-600 px-6 lg:px-10 text-lg"
             >
               {isPending ? "Generating..." : "Generate!"}
             </button>
           </p>
         </Form>
-        <div className="h-[25rem] flex-1 flex justify-center items-start">
+        <div className=" h-[22rem] lg:h-[25rem]  flex-1 flex justify-center items-start">
           {!formState.result && (
-            <p className="text-stone-400 text-3xl  mt-10 p-8 font-mono">
+            <p className="text-stone-400 text-xl lg:text-3xl  mt-0 lg:mt-10 p-8 pt-0  lg:p-8 font-mono">
               Press "Generate" to generate an image based on your prompt.
             </p>
           )}
@@ -119,7 +128,7 @@ const ImageGeneration = () => {
             <img
               src={formState.imageUrl}
               alt={formState.prompt}
-              className="h-[25rem] shadow-2xl rounded-md"
+              className=" p-3  lg:p-0 h-[25rem] shadow-2xl rounded-md"
             />
           )}
           {formState.result === "error" && (
@@ -131,7 +140,7 @@ const ImageGeneration = () => {
       {token && (
         <button
           onClick={logout}
-          className="mt-28 text-stone-300 text-2xl bg-none hover:text-stone-400"
+          className=" mt-8 lg:mt-28 text-stone-300 text:xl  lg:text-2xl bg-none hover:text-stone-400"
         >
           Logout
         </button>
