@@ -52,6 +52,7 @@ export function AuthContextProvider({ children }) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ email, password }),
+      credentials: "include",
     });
 
     const resData = await response.json();
@@ -70,6 +71,7 @@ export function AuthContextProvider({ children }) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ email, password }),
+      credentials: "include",
     });
 
     const resData = await response.json();
