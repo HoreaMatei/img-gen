@@ -6,7 +6,6 @@ const secretKey = process.env.JWT_SECRET_KEY;
 
 export function createUser(email, password) {
   const user = db.prepare("SELECT * FROM users WHERE email = ?").get(email);
-  console.log(user);
 
   if (user) {
     throw new Error("User creation failed, invalid credentials.");

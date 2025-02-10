@@ -1,5 +1,4 @@
 import express from "express";
-
 import { createUser, enforceAuth, login } from "./auth.js";
 import { generateImage } from "./image.js";
 import cors from "cors";
@@ -11,9 +10,13 @@ const app = express();
 app.use(
   cors({
     origin: "https://img-gen-njso.vercel.app",
+    methods: "GET,POST,OPTIONS",
+    allowedHeaders: "Content-Type, Authorization",
     credentials: true,
   })
 );
+
+app.options("*", cors());
 
 app.use(express.json());
 
