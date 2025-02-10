@@ -1,5 +1,5 @@
 import express from "express";
-import jwt from "jsonwebtoken";
+
 import { createUser, enforceAuth, login } from "./auth.js";
 import { generateImage } from "./image.js";
 import cors from "cors";
@@ -10,9 +10,11 @@ const app = express();
 
 app.use(
   cors({
-    origin: "*",
+    origin: "https://img-gen-njso.vercel.app",
+    credentials: true,
   })
 );
+
 app.use(express.json());
 
 app.post("/signup", async (req, res) => {
