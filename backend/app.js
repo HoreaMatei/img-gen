@@ -18,8 +18,6 @@ app.use(
 
 app.options("*", cors());
 
-app.use(express.json());
-
 app.options("*", (req, res) => {
   res.setHeader(
     "Access-Control-Allow-Origin",
@@ -30,6 +28,8 @@ app.options("*", (req, res) => {
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.status(200).end();
 });
+
+app.use(express.json());
 
 app.post("/signup", async (req, res) => {
   try {
