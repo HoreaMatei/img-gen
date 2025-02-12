@@ -8,7 +8,7 @@ export default defineConfig({
     proxy: {
       // Target is your backend API
       "/api": {
-        target: "http://localhost:8080",
+        target: "https://img-generator-red.vercel.app",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
 
