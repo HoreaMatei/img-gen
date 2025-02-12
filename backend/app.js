@@ -20,7 +20,7 @@ app.use(options);
 
 app.use(express.json());
 
-app.post("/signup", async (req, res) => {
+app.post("/api/signup", async (req, res) => {
   try {
     const { email, password } = req.body;
     if (
